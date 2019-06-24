@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-using DrawWithLineUs.Console.Model;
+using DrawWithLineUs.Con.Model;
 
-namespace DrawWithLineUs.Console.Service
+namespace DrawWithLineUs.Con.Service
 {
     public static class SvgService
     {

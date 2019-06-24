@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace DrawWithLineUs.Console.Service
+namespace DrawWithLineUs.Con.Service
 {
     public static class CommunicationService
     {

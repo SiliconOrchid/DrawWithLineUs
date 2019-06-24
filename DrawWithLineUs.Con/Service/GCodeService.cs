@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-using DrawWithLineUs.Console.Config;
-using DrawWithLineUs.Console.Model;
+using DrawWithLineUs.Con.Config;
+using DrawWithLineUs.Con.Model;
 
-namespace DrawWithLineUs.Console.Service
+namespace DrawWithLineUs.Con.Service
 {
     public static class GCodeService
     {

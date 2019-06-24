@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
-using DrawWithLineUs.Console.Model;
+
+using DrawWithLineUs.Con.Model;
 
 
-namespace DrawWithLineUs.Console.Config
+namespace DrawWithLineUs.Con.Config
 {
     public static class Canvas
     {

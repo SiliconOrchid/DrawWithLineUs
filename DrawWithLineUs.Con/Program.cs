@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 
-using DrawWithLineUs.Console.Model;
-using DrawWithLineUs.Console.Service;
+using DrawWithLineUs.Con.Model;
+using DrawWithLineUs.Con.Service;
 
-namespace DrawWithLineUs.Console
+namespace DrawWithLineUs.Con
 {
     class Program
     {
 
         static void Main(string[] args)
         {
-            const bool connectToLineUsHardware = false;
-            const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\TelnetSandbox\parrot.svg";
+            Console.WriteLine();
+
+            const bool testMode = false;
+            const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
             const string lineusIP = "192.168.1.214";
             const int lineusport = 1337;
 
@@ -33,9 +35,7 @@ namespace DrawWithLineUs.Console
 
             List<string> listGCodes = GCodeService.GenerateGCode(listCoordinateStructures);
 
-
-
-            if (connectToLineUsHardware)
+            if (testMode)
             {
                 TcpClient client;
                 NetworkStream stream;
