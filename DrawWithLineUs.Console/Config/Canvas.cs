@@ -1,4 +1,8 @@
-﻿namespace DrawWithLineUs.Console.Config
+﻿using System.Drawing;
+using DrawWithLineUs.Console.Model;
+
+
+namespace DrawWithLineUs.Console.Config
 {
     public static class Canvas
     {

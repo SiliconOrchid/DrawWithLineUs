@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Sockets;
+
+using DrawWithLineUs.Console.Model;
+using DrawWithLineUs.Console.Service;
 
 namespace DrawWithLineUs.Console
 {
