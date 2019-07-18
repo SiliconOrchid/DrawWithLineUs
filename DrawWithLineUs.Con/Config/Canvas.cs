@@ -12,7 +12,7 @@ namespace DrawWithLineUs.Con.Config
         public static BoundingBox DrawableArea { get; private set; }
             = new BoundingBox
             {
-                BottomLeft = new Point(700, -1000),
+                BottomLeft = new Point(650, -1000),
                 TopRight = new Point(1800, 1000)
             };
 
