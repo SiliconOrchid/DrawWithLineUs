@@ -12,11 +12,10 @@ namespace DrawWithLineUs.Con
 
         static void Main(string[] args)
         {
-            Console.WriteLine();
 
-            const bool testMode = false;
+            const bool testMode = false; 
             const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
-            const string lineusIP = "192.168.1.214";
+            const string lineusIP = "192.168.1.212";
             const int lineusport = 1337;
 
             List<string> listPathNodes = SvgService.ExtractPaths(pathToSourceSVG);
@@ -37,6 +36,13 @@ namespace DrawWithLineUs.Con
 
             if (testMode)
             {
+                foreach (var gcode in listGCodes)
+                {
+                    Console.WriteLine(gcode);
+                }
+            }
+            else
+            {
                 TcpClient client;
                 NetworkStream stream;
                 CommunicationService.ConnectToLineUs(out client, out stream, lineusIP, lineusport);
@@ -47,13 +53,6 @@ namespace DrawWithLineUs.Con
                 }
 
                 client.Close();
-            }
-            else
-            {
-                foreach (var gcode in listGCodes)
-                {
-                    Console.WriteLine(gcode);
-                }
             }
 
         }
