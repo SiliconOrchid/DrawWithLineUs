@@ -10,13 +10,15 @@ namespace DrawWithLineUs.Con
     class Program
     {
 
+        const bool testMode = false;
+        const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
+        const string lineusIP = "192.168.1.212";
+        const int lineusport = 1337;
+
+
+
         static void Main(string[] args)
         {
-
-            const bool testMode = false; 
-            const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
-            const string lineusIP = "192.168.1.212";
-            const int lineusport = 1337;
 
             List<string> listPathNodes = SvgService.ExtractPaths(pathToSourceSVG);
 
