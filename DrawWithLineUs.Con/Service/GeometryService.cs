@@ -9,6 +9,12 @@ namespace DrawWithLineUs.Con.Service
 {
     public class GeometryService : IGeometryService
     {
+        /// <summary>
+        /// Compares the height & width of image, against the dimensions of the Canvas' drawable-area, to determine
+        /// a scaling factor that needs to be used.   Automatically selects the smaller scaling ratio from the two axis.
+        /// </summary>
+        /// <param name="sourceBoundingBox"></param>
+        /// <returns></returns>
         public decimal DetermineScalingRatio(BoundingBox sourceBoundingBox)
         {
             decimal scalingRatio = 1;
@@ -33,9 +39,14 @@ namespace DrawWithLineUs.Con.Service
             return scalingRatio;
         }
 
+
+        /// <summary>
+        /// Determine the max boundaries of the coordinate points, extracted from the original image, by inspecting every possible point
+        /// </summary>
+        /// <param name="listCoordinateStructures"></param>
+        /// <returns>Populated [BoundingBox] with coordinates of the image extremities</returns>
         public BoundingBox DetermineSourceBounds(List<CoordinateStructure> listCoordinateStructures)
         {
-            // calculate the max boundaries of the original image, by inspecting every possible point
             Console.WriteLine($"Determining boundaries...");
 
             // box used to determine extremeties of source image - corners are deliberatly set with large opposing values, as these will be redefined later
