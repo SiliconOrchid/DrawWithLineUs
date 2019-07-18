@@ -12,6 +12,14 @@ namespace DrawWithLineUs.Con
     {
         private static IServiceProvider _serviceProvider;
 
+        private static ISvgService _svgService;
+        private static IGeometryService _geometryService;
+        private static IGCodeService _gCodeService;
+        private static ICommunicationService _communicationService;
+
+        private static List<CoordinateStructure> _listCoordinateStructures;
+        private static List<string> _listGCodes;
+
 
         const bool testMode = true;
         const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
@@ -22,32 +30,21 @@ namespace DrawWithLineUs.Con
         static void Main(string[] args)
         {
             RegisterServices();
+            SetServices();
 
-            var svgService = _serviceProvider.GetService<ISvgService>();
-            var geometryService = _serviceProvider.GetService<IGeometryService>();
-            var gCodeService = _serviceProvider.GetService<IGCodeService>();
-            var communicationService = _serviceProvider.GetService<ICommunicationService>();
+            GetCoordinatesFromSVG();
+            ApplyGeometry();
+            GenerateGCode();
+            Draw();
 
+            DisposeServices();
+        }
 
-            List<string> listPathNodes = svgService.ExtractPaths(pathToSourceSVG);
-
-            List<CoordinateStructure> listCoordinateStructures = svgService.ExtractCoordinates(listPathNodes);
-
-            BoundingBox sourceBoundingBox = geometryService.DetermineSourceBounds(listCoordinateStructures);
-
-            decimal scalingRatio = geometryService.DetermineScalingRatio(sourceBoundingBox);
-
-            //TODO: calculate appropriate offset automatically (so as to center image in drawable area)
-            int offsetX = 800;
-            int offsetY = -500;
-
-            geometryService.RescaleAndOffset(listCoordinateStructures, scalingRatio, offsetX, offsetY);
-
-            List<string> listGCodes = gCodeService.GenerateGCode(listCoordinateStructures);
-
+        private static void Draw()
+        {
             if (testMode)
             {
-                foreach (var gcode in listGCodes)
+                foreach (var gcode in _listGCodes)
                 {
                     Console.WriteLine(gcode);
                 }
@@ -56,21 +53,40 @@ namespace DrawWithLineUs.Con
             {
                 TcpClient client;
                 NetworkStream stream;
-                communicationService.ConnectToLineUs(out client, out stream, lineusIP, lineusport);
+                _communicationService.ConnectToLineUs(out client, out stream, lineusIP, lineusport);
 
-                foreach (var gcode in listGCodes)
+                foreach (var gcode in _listGCodes)
                 {
-                    communicationService.Transmit(stream, gcode);
+                    _communicationService.Transmit(stream, gcode);
                 }
 
                 client.Close();
             }
-
-
-            DisposeServices();
         }
 
+        private static void GenerateGCode()
+        {
+            _listGCodes = _gCodeService.GenerateGCode(_listCoordinateStructures);
+        }
 
+        private static void ApplyGeometry()
+        {
+            BoundingBox sourceBoundingBox = _geometryService.DetermineSourceBounds(_listCoordinateStructures);
+
+            decimal scalingRatio = _geometryService.DetermineScalingRatio(sourceBoundingBox);
+
+            //TODO: calculate appropriate offset automatically (so as to center image in drawable area)
+            int offsetX = 800;
+            int offsetY = -500;
+
+            _geometryService.RescaleAndOffset(_listCoordinateStructures, scalingRatio, offsetX, offsetY);
+        }
+
+        private static void GetCoordinatesFromSVG()
+        {
+            List<string> listPathNodes = _svgService.ExtractPaths(pathToSourceSVG);
+            _listCoordinateStructures = _svgService.ExtractCoordinates(listPathNodes);
+        }
 
 
         private static void RegisterServices()
@@ -80,8 +96,15 @@ namespace DrawWithLineUs.Con
             collection.AddScoped<IGCodeService, GCodeService>();
             collection.AddScoped<IGeometryService, GeometryService>();
             collection.AddScoped<ISvgService, SvgService>();
-
             _serviceProvider = collection.BuildServiceProvider();
+        }
+
+        private static void SetServices()
+        {
+            _svgService = _serviceProvider.GetService<ISvgService>();
+            _geometryService = _serviceProvider.GetService<IGeometryService>();
+            _gCodeService = _serviceProvider.GetService<IGCodeService>();
+            _communicationService = _serviceProvider.GetService<ICommunicationService>();
         }
 
         private static void DisposeServices()
