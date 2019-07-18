@@ -76,7 +76,7 @@ namespace DrawWithLineUs.Con.Service
 
 
                     //depending on the current variant, increment the current index appropriately (either by 2 for a line, or 6 for a curve)
-                    i = IncrementCurrentPathIndex(i, currentSvgPathVariantEnum);
+                    i = i + IncrementCurrentPathIndex(currentSvgPathVariantEnum);
 
                 }
 
@@ -128,7 +128,14 @@ namespace DrawWithLineUs.Con.Service
             return currentSvgPathVariantEnum;
         }
 
-        private int IncrementCurrentPathIndex(int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+
+        /// <summary>
+        /// Selectively return an int, , which is used to increment the index used to parse the
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="currentSvgPathVariantEnum"></param>
+        /// <returns></returns>
+        private int IncrementCurrentPathIndex(SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             // in an SVG path, this code accounts for two "variants".
             // a "line variant" has coordinate values that come in just pairs, therefore we increment the index by 2
@@ -138,19 +145,14 @@ namespace DrawWithLineUs.Con.Service
             switch (currentSvgPathVariantEnum)
             {
                 case SvgPathVariantEnum.Line:
-                    i = i + 2;
-                    break;
+                    return 2;
                 case SvgPathVariantEnum.Curve:
-                    i = i + 6;
-                    break;
+                    return 6;
                 case SvgPathVariantEnum.MoveTo:
-                    i = i + 2;
-                    break;
-
+                    return 2;
                 default:
                     throw new Exception("Encountered 'SvgPathVariantEnum.Unset'");
             }
-            return i;
         }
 
 
