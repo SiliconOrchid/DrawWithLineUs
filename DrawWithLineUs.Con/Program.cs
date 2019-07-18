@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-
+using DrawWithLineUs.Con.Config;
 using DrawWithLineUs.Con.Model;
 using DrawWithLineUs.Con.Service;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,10 +21,7 @@ namespace DrawWithLineUs.Con
         private static List<string> _listGCodes;
 
 
-        const bool testMode = true;
-        const string pathToSourceSVG = @"C:\Users\jimmc\Source\Repos\DrawWithLineUs\Resources\parrot.svg";
-        const string lineusIP = "192.168.1.212";
-        const int lineusport = 1337;
+
 
 
         static void Main(string[] args)
@@ -42,7 +39,7 @@ namespace DrawWithLineUs.Con
 
         private static void Draw()
         {
-            if (testMode)
+            if (ProgramConfig.TestMode)
             {
                 foreach (var gcode in _listGCodes)
                 {
@@ -53,7 +50,7 @@ namespace DrawWithLineUs.Con
             {
                 TcpClient client;
                 NetworkStream stream;
-                _communicationService.ConnectToLineUs(out client, out stream, lineusIP, lineusport);
+                _communicationService.ConnectToLineUs(out client, out stream, ProgramConfig.LineUsIP, ProgramConfig.LineUsport);
 
                 foreach (var gcode in _listGCodes)
                 {
@@ -84,7 +81,7 @@ namespace DrawWithLineUs.Con
 
         private static void GetCoordinatesFromSVG()
         {
-            List<string> listPathNodes = _svgService.ExtractPaths(pathToSourceSVG);
+            List<string> listPathNodes = _svgService.ExtractPaths(ProgramConfig.PathToSourceSVG);
             _listCoordinateStructures = _svgService.ExtractCoordinates(listPathNodes);
         }
 
