@@ -7,10 +7,10 @@ using DrawWithLineUs.Con.Model;
 
 namespace DrawWithLineUs.Con.Service
 {
-    public static class GCodeService
+    public class GCodeService : IGCodeService
     {
 
-        public static List<string> GenerateGCode(List<CoordinateStructure> listCoordinateStructures)
+        public List<string> GenerateGCode(List<CoordinateStructure> listCoordinateStructures)
         {
             Console.WriteLine($"Generating GCode");
 

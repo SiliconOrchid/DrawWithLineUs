@@ -7,9 +7,9 @@ using DrawWithLineUs.Con.Model;
 
 namespace DrawWithLineUs.Con.Service
 {
-    public static class GeometryService
+    public class GeometryService : IGeometryService
     {
-        public static decimal DetermineScalingRatio(BoundingBox sourceBoundingBox)
+        public decimal DetermineScalingRatio(BoundingBox sourceBoundingBox)
         {
             decimal scalingRatio = 1;
             decimal ratioX = (decimal)Canvas.DrawableArea.GetBoxWidth() / (decimal)sourceBoundingBox.GetBoxWidth();
@@ -33,7 +33,7 @@ namespace DrawWithLineUs.Con.Service
             return scalingRatio;
         }
 
-        public static BoundingBox DetermineSourceBounds(List<CoordinateStructure> listCoordinateStructures)
+        public BoundingBox DetermineSourceBounds(List<CoordinateStructure> listCoordinateStructures)
         {
             // calculate the max boundaries of the original image, by inspecting every possible point
             Console.WriteLine($"Determining boundaries...");
@@ -79,7 +79,7 @@ namespace DrawWithLineUs.Con.Service
         }
 
 
-        public static void RescaleAndOffset(List<CoordinateStructure> listCoordinateStructures, decimal scalingRatio, int offsetX, int offsetY)
+        public void RescaleAndOffset(List<CoordinateStructure> listCoordinateStructures, decimal scalingRatio, int offsetX, int offsetY)
         {
             foreach (var coordinateStucture in listCoordinateStructures)
             {

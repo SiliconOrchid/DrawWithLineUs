@@ -9,13 +9,13 @@ using DrawWithLineUs.Con.Model;
 
 namespace DrawWithLineUs.Con.Service
 {
-    public static class SvgService
+    public class SvgService : ISvgService
     {
 
         // ### useful guide to SVG path syntax  https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths    ###
 
 
-        public static List<string> ExtractPaths(string PathToSourceSVG)
+        public List<string> ExtractPaths(string PathToSourceSVG)
         {
             List<string> listPathNodes = new List<string>();
 
@@ -42,7 +42,7 @@ namespace DrawWithLineUs.Con.Service
 
 
 
-        public static List<CoordinateStructure> ExtractCoordinates(List<string> listPathNodes)
+        public List<CoordinateStructure> ExtractCoordinates(List<string> listPathNodes)
         {
             // an array of arrays (which contain point coordinates, which are constructed from the list of offsets in the SVG
             List<CoordinateStructure> listCoordinateStructures = new List<CoordinateStructure>();
@@ -86,7 +86,7 @@ namespace DrawWithLineUs.Con.Service
             return listCoordinateStructures;
         }
 
-        private static void ExtractCoordinatesAddToList(CoordinateStructure coordinateStructure, string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+        private void ExtractCoordinatesAddToList(CoordinateStructure coordinateStructure, string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             string coordX;
             string coordY;
@@ -104,7 +104,7 @@ namespace DrawWithLineUs.Con.Service
                 case SvgPathVariantEnum.MoveTo:
                     // we simply don't need to deal with a move-to command in this code (because we're not drawing proper curves)
                     return;
-                    
+
                 default:
                     throw new Exception("Encountered 'SvgPathVariantEnum.Unset'");
             }
@@ -117,7 +117,7 @@ namespace DrawWithLineUs.Con.Service
             coordinateStructure.ListPoints.Add(new Point(previousPoint.X + offsetX, previousPoint.Y + offsetY));
         }
 
-        private static SvgPathVariantEnum SetCurrentPathVariant(string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+        private SvgPathVariantEnum SetCurrentPathVariant(string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             //check word for a path-variant (either "l" for line, or "c" for curve) that indicates a change in following data...
             string currentPathVariantChar = Regex.Replace(listWords[i], "[0-9.+-]", "");
@@ -128,7 +128,7 @@ namespace DrawWithLineUs.Con.Service
             return currentSvgPathVariantEnum;
         }
 
-        private static int IncrementCurrentPathIndex(int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+        private int IncrementCurrentPathIndex(int i, SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             // in an SVG path, this code accounts for two "variants".
             // a "line variant" has coordinate values that come in just pairs, therefore we increment the index by 2
@@ -152,12 +152,14 @@ namespace DrawWithLineUs.Con.Service
             }
             return i;
         }
+
+
         /// <summary>
         /// Return an appropriate [SvgPathVariantEnum] from a character.
         /// </summary>
         /// <param name="variantCharacter"></param>
         /// <returns></returns>
-        private static SvgPathVariantEnum GetSvgPathVariantEnumFromString(string variantCharacter)
+        private SvgPathVariantEnum GetSvgPathVariantEnumFromString(string variantCharacter)
         {
             switch (variantCharacter.ToLower())
             {

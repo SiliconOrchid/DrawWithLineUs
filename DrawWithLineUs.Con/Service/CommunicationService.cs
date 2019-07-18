@@ -4,9 +4,9 @@ using System.Net.Sockets;
 
 namespace DrawWithLineUs.Con.Service
 {
-    public static class CommunicationService
+    public class CommunicationService : ICommunicationService
     {
-        public static void ConnectToLineUs(out TcpClient client, out NetworkStream stream, string lineusIP, int lineusport)
+        public void ConnectToLineUs(out TcpClient client, out NetworkStream stream, string lineusIP, int lineusport)
         {
             IPAddress lineusipaddress = System.Net.IPAddress.Parse(lineusIP);
             client = new TcpClient();
@@ -15,7 +15,7 @@ namespace DrawWithLineUs.Con.Service
             SayHello(stream);
         }
 
-        private static void SayHello(NetworkStream stream)
+        private void SayHello(NetworkStream stream)
         {
             Byte[] data = new Byte[256];
             int bytes = stream.Read(data, 0, data.Length);
@@ -23,7 +23,7 @@ namespace DrawWithLineUs.Con.Service
             Console.WriteLine($"Received: {responseData}");
         }
 
-        public static void Transmit(NetworkStream stream, string instruction)
+        public void Transmit(NetworkStream stream, string instruction)
         {
             //Console.WriteLine($"Sent: {instruction}");
             byte[] data = System.Text.Encoding.ASCII.GetBytes(instruction);
