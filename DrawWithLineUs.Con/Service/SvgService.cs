@@ -23,6 +23,8 @@ namespace DrawWithLineUs.Con.Service
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.ProhibitDtd = false;
 
+
+
             Console.WriteLine($"Reading XML(SVG)...");
             using (XmlReader reader = XmlReader.Create($"{PathToSourceSVG}", settings))
             {

@@ -33,7 +33,7 @@ namespace DrawWithLineUs.Con.Service
 
 
         /// <summary>
-        /// Reposition pen to "home" and explicitly lift the pen as first step (1000,1000 is defined as home in diagram)
+        /// Reposition pen to "home" and explicitly lift the pen as first step (1000,1000 is defined as home in documentation/diagram)
         /// using "G00" for rapid positioning
         /// </summary>
         /// <param name="listGCodes"></param>
