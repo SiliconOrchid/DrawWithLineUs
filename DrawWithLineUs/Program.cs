@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using DrawWithLineUs.Config;
-using DrawWithLineUs.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+
 using DrawWithLineUs.Service;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DrawWithLineUs.Con
 {
@@ -15,7 +11,7 @@ namespace DrawWithLineUs.Con
             // Create service collection and configure our services
             var services = ConfigureServices();
 
-            // Generate a provider
+            // Generate a service provider
             var serviceProvider = services.BuildServiceProvider();
 
             // Kick off our actual code
@@ -26,6 +22,7 @@ namespace DrawWithLineUs.Con
         private static IServiceCollection ConfigureServices()
         {
             IServiceCollection services = new ServiceCollection();
+
             services.AddScoped<ICommunicationService, CommunicationService>();
             services.AddScoped<IGCodeService, GCodeService>();
             services.AddScoped<IGeometryService, GeometryService>();
@@ -34,7 +31,5 @@ namespace DrawWithLineUs.Con
             services.AddScoped<ConsoleApplication>();
             return services;
         }
-
-
     }
 }
