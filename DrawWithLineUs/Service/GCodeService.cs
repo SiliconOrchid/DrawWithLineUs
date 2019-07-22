@@ -75,14 +75,8 @@ namespace DrawWithLineUs.Service
         {
             foreach (var step in sequence.ListRescaledPoints)
             {
-                Point stepPoint = new Point
-                {
-                    X = (int)(step.X),
-                    Y = (int)(step.Y)
-                };
-
                 // using "G01" for "linear interpolation", to draw line between points
-                listGCodes.Add($"{GCodes.LinearInterpolation} x{stepPoint.X} y{stepPoint.Y} z{Pen.PenDownIndex}\n");
+                listGCodes.Add($"{GCodes.LinearInterpolation} x{(int)step.X} y{(int)step.Y} z{Pen.PenDownIndex}\n");
             }
         }
 
