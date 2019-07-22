@@ -1,8 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
+
 using DrawWithLineUs.Config;
 using DrawWithLineUs.Model;
 using DrawWithLineUs.Service;
@@ -70,8 +69,14 @@ namespace DrawWithLineUs.Con
 
         private void Draw()
         {
+            Console.WriteLine("++++++++++++");
+
             if (ProgramConfig.TestMode)
             {
+                Console.WriteLine("Running in test mode - G-Code will be generated but not sent to Line-us.   You can change mode by editing [TestMode] in [ProgramConfig.cs]");
+                Console.WriteLine("++++++++++++");
+
+
                 foreach (var gcode in _listGCodes)
                 {
                     Console.WriteLine(gcode);
@@ -79,6 +84,11 @@ namespace DrawWithLineUs.Con
             }
             else
             {
+                Console.WriteLine("Not running in test mode - G-Code will be transmitted to Line-us.   You can change mode by editing [TestMode] in [ProgramConfig.cs]");
+                Console.WriteLine("If the Line-us is not drawing, check the IP address is set correctly in [ProgramConfig.cs]");
+                Console.WriteLine("++++++++++++");
+
+
                 TcpClient client;
                 NetworkStream stream;
                 _communicationService.ConnectToLineUs(out client, out stream, ProgramConfig.LineUsIP, ProgramConfig.LineUsport);
