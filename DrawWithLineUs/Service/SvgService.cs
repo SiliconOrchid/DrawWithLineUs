@@ -71,10 +71,27 @@ namespace DrawWithLineUs.Service
                 while (i < listWords.Length)
                 {
                     //check to see if the "variant" has changed (is this a line or curve, or are we carrying on from the last previously set variant?)
-                    currentSvgPathVariantEnum = SetCurrentPathVariant(listWords, i, currentSvgPathVariantEnum);
+                    var newPathVariant = GetCurrentPathVariant(listWords, i);
+                    if (newPathVariant != SvgPathVariantEnum.Unset)
+                    {
+                        currentSvgPathVariantEnum = newPathVariant;
+                    }
+
 
                     // depending on the "variant" extract the appropriate coordinates and add this to "coordinateStructure.ListPoints" collection. 
-                    ExtractCoordinatesAddToList(coordinateStructure, listWords, i, currentSvgPathVariantEnum);
+                        Point previousPoint = coordinateStructure.ListPoints[coordinateStructure.ListPoints.Count - 1];
+
+                    Point? nextPoint = ExtractCoordinate(previousPoint, listWords, i, currentSvgPathVariantEnum);
+
+                    if (nextPoint is null)
+                    {
+                        // skip over, as point was a "MoveTo" command.
+                    }
+                    else
+                    {
+                        coordinateStructure.ListPoints.Add((Point)nextPoint);
+                    }
+                   
 
 
                     //depending on the current variant, increment the current index appropriately (either by 2 for a line, or 6 for a curve)
@@ -88,7 +105,19 @@ namespace DrawWithLineUs.Service
             return listCoordinateStructures;
         }
 
-        private void ExtractCoordinatesAddToList(CoordinateStructure coordinateStructure, string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+        /// <summary>
+        /// Extracts the appropriate coordinates from a list SVG path string values
+        /// Coordinate to use, changes depending on the SvgPathVariant (i.e. line or curve)
+        /// adds extracted coordinate to previous trailing value (because coordinates are not absolutes, but instead deltas)
+        /// </summary>
+        /// <param name="previousPoint"></param>
+        /// <param name="listWords"></param>
+        /// <param name="i"></param>
+        /// <param name="currentSvgPathVariantEnum"></param>
+        /// <returns>
+        /// Nullable Point, which represents the next *Absolute* coordinate.
+        /// </returns>
+        public Point? ExtractCoordinate(Point previousPoint, string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             string coordX;
             string coordY;
@@ -105,7 +134,7 @@ namespace DrawWithLineUs.Service
                     break;
                 case SvgPathVariantEnum.MoveTo:
                     // we simply don't need to deal with a move-to command in this code (because we're not drawing proper curves)
-                    return;
+                    return null;
 
                 default:
                     throw new Exception("Encountered 'SvgPathVariantEnum.Unset'");
@@ -114,20 +143,22 @@ namespace DrawWithLineUs.Service
             int offsetX = int.Parse(coordX);
             int offsetY = int.Parse(coordY);
 
-            //coordinateStructure.ListPoints.Add(new Point(coordBaseX + offsetX, coordBaseY + offsetY));
-            Point previousPoint = coordinateStructure.ListPoints[coordinateStructure.ListPoints.Count - 1];
-            coordinateStructure.ListPoints.Add(new Point(previousPoint.X + offsetX, previousPoint.Y + offsetY));
+            return new Point(previousPoint.X + offsetX, previousPoint.Y + offsetY);
         }
 
-        private SvgPathVariantEnum SetCurrentPathVariant(string[] listWords, int i, SvgPathVariantEnum currentSvgPathVariantEnum)
+        public SvgPathVariantEnum GetCurrentPathVariant(string[] listWords, int i)
         {
             //check word for a path-variant (either "l" for line, or "c" for curve) that indicates a change in following data...
             string currentPathVariantChar = Regex.Replace(listWords[i], "[0-9.+-]", "");
             if (!String.IsNullOrWhiteSpace(currentPathVariantChar))  //only update the current "currentSvgPathVariantEnum" if we have encountered a new letter, otherwise keep going with the existing one
             {
-                currentSvgPathVariantEnum = GetSvgPathVariantEnumFromString(currentPathVariantChar);
+                return GetSvgPathVariantEnumFromString(currentPathVariantChar);
             }
-            return currentSvgPathVariantEnum;
+            else
+            {
+                return SvgPathVariantEnum.Unset;
+            }
+
         }
 
 
@@ -137,7 +168,7 @@ namespace DrawWithLineUs.Service
         /// <param name="i"></param>
         /// <param name="currentSvgPathVariantEnum"></param>
         /// <returns></returns>
-        private int IncrementCurrentPathIndex(SvgPathVariantEnum currentSvgPathVariantEnum)
+        public int IncrementCurrentPathIndex(SvgPathVariantEnum currentSvgPathVariantEnum)
         {
             // in an SVG path, this code accounts for two "variants".
             // a "line variant" has coordinate values that come in just pairs, therefore we increment the index by 2
@@ -163,7 +194,7 @@ namespace DrawWithLineUs.Service
         /// </summary>
         /// <param name="variantCharacter"></param>
         /// <returns></returns>
-        private SvgPathVariantEnum GetSvgPathVariantEnumFromString(string variantCharacter)
+        public SvgPathVariantEnum GetSvgPathVariantEnumFromString(string variantCharacter)
         {
             switch (variantCharacter.ToLower())
             {
@@ -173,9 +204,10 @@ namespace DrawWithLineUs.Service
                     return SvgPathVariantEnum.Curve;
                 case "m":
                     return SvgPathVariantEnum.MoveTo;
+                default:
+                    throw new Exception("Encountered Unknown Path Variant character");
             }
 
-            return SvgPathVariantEnum.Unset;
         }
     }
 }
