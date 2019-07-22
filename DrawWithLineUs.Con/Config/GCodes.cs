@@ -1,4 +1,4 @@
-﻿namespace DrawWithLineUs.Con.Config
+﻿namespace DrawWithLineUs.Config
 {
     // line-us GCODE spec https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/GCodeSpec.pdf
 

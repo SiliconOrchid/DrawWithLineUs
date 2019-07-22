@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace DrawWithLineUs.Con.Service
+namespace DrawWithLineUs.Service
 {
     public interface ICommunicationService
     {

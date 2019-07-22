@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace DrawWithLineUs.Con.Model
+namespace DrawWithLineUs.Model
 {
     public class CoordinateStructure
     {

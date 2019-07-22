@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>DrawWithLineUs.Con</RootNamespace>
+    <RootNamespace>DrawWithLineUs</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

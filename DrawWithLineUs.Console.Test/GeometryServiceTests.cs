@@ -2,8 +2,8 @@ using System.Drawing;
 
 using NUnit.Framework;
 
-using DrawWithLineUs.Con.Model;
-using DrawWithLineUs.Con.Service;
+using DrawWithLineUs.Model;
+using DrawWithLineUs.Service;
 using System.Collections.Generic;
 
 namespace Tests

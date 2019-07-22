@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DrawWithLineUs.Con.Model;
+using DrawWithLineUs.Model;
 
-namespace DrawWithLineUs.Con.Service
+namespace DrawWithLineUs.Service
 {
     public interface IGCodeService
     {

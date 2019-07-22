@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DrawWithLineUs.Con\DrawWithLineUs.Console.csproj" />
+    <ProjectReference Include="..\DrawWithLineUs.Con\DrawWithLineUs.csproj" />
   </ItemGroup>
 
 </Project>

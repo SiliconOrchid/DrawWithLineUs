@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using DrawWithLineUs.Con.Config;
-using DrawWithLineUs.Con.Model;
-using DrawWithLineUs.Con.Service;
+using DrawWithLineUs.Config;
+using DrawWithLineUs.Model;
+using DrawWithLineUs.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DrawWithLineUs.Con

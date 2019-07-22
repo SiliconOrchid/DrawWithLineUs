@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Xml;
-using DrawWithLineUs.Con.Enum;
-using DrawWithLineUs.Con.Model;
+using DrawWithLineUs.Enum;
+using DrawWithLineUs.Model;
 
-namespace DrawWithLineUs.Con.Service
+namespace DrawWithLineUs.Service
 {
     public class SvgService : ISvgService
     {

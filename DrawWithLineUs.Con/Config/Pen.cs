@@ -1,4 +1,4 @@
-﻿namespace DrawWithLineUs.Con.Config
+﻿namespace DrawWithLineUs.Config
 {
     public static class Pen
     {

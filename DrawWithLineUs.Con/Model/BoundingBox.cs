@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace DrawWithLineUs.Con.Model
+namespace DrawWithLineUs.Model
 {
     public class BoundingBox
     {

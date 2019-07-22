@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DrawWithLineUs.Con.Enum
+namespace DrawWithLineUs.Enum
 {
     public enum SvgPathVariantEnum
     {
