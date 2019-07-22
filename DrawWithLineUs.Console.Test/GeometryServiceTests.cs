@@ -1,12 +1,13 @@
 using System.Drawing;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
 using DrawWithLineUs.Model;
 using DrawWithLineUs.Service;
-using System.Collections.Generic;
 
-namespace Tests
+
+namespace DrawWithLineUs.Console.Test
 {
     public class GeometryServiceTests
     {
