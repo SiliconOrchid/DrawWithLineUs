@@ -42,10 +42,14 @@ namespace DrawWithLineUs.Con
         }
 
 
-        private void GenerateGCode()
+        private void GetCoordinatesFromSVG()
         {
-            _listGCodes = _gCodeService.GenerateGCode(_listCoordinateStructures);
+            List<string> listPathNodes = _svgService.ExtractPaths(ProgramConfig.PathToSourceSVG);
+            _listCoordinateStructures = _svgService.ExtractCoordinates(listPathNodes);
         }
+
+
+ 
 
         private void ApplyGeometry()
         {
@@ -60,11 +64,13 @@ namespace DrawWithLineUs.Con
             _geometryService.RescaleAndOffset(_listCoordinateStructures, scalingRatio, offsetX, offsetY);
         }
 
-        private void GetCoordinatesFromSVG()
+
+
+        private void GenerateGCode()
         {
-            List<string> listPathNodes = _svgService.ExtractPaths(ProgramConfig.PathToSourceSVG);
-            _listCoordinateStructures = _svgService.ExtractCoordinates(listPathNodes);
+            _listGCodes = _gCodeService.GenerateGCode(_listCoordinateStructures);
         }
+
 
 
         private void Draw()
