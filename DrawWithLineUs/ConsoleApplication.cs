@@ -35,10 +35,10 @@ namespace DrawWithLineUs.Con
         // Application starting point
         public void Run()
         {
-            GetCoordinatesFromSVG();
-            ApplyGeometry();
-            GenerateGCode();
-            Draw();
+            GetCoordinatesFromSVG(); // extracts a list of coordinates from the source file
+            ApplyGeometry(); // rescales the coordinates, to fit within the drawable area
+            GenerateGCode(); // produces a list of G-Code from the list of coordinates
+            Draw(); // Sends the G-Code to the Line-us
         }
 
 
