@@ -62,9 +62,6 @@ namespace DrawWithLineUs.Service
                 coordinateStructure.ListPoints.Add(new Point(coordStartX, coordStartY));
 
 
-
-
-
                 int i = 2; // don't start at very beginning, skip over the first pair of values as these are always the "starting position"
                 SvgPathVariantEnum currentSvgPathVariantEnum = SvgPathVariantEnum.Unset;
 
@@ -77,9 +74,8 @@ namespace DrawWithLineUs.Service
                         currentSvgPathVariantEnum = newPathVariant;
                     }
 
-
                     // depending on the "variant" extract the appropriate coordinates and add this to "coordinateStructure.ListPoints" collection. 
-                        Point previousPoint = coordinateStructure.ListPoints[coordinateStructure.ListPoints.Count - 1];
+                    Point previousPoint = coordinateStructure.ListPoints[coordinateStructure.ListPoints.Count - 1];
 
                     Point? nextPoint = ExtractCoordinate(previousPoint, listWords, i, currentSvgPathVariantEnum);
 
@@ -93,10 +89,8 @@ namespace DrawWithLineUs.Service
                     }
                    
 
-
                     //depending on the current variant, increment the current index appropriately (either by 2 for a line, or 6 for a curve)
                     i = i + IncrementCurrentPathIndex(currentSvgPathVariantEnum);
-
                 }
 
                 listCoordinateStructures.Add(coordinateStructure);
