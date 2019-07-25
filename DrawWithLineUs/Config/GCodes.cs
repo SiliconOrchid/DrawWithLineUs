@@ -6,6 +6,6 @@
     {
         public const string RapidReposition = "g00";
         public const string LinearInterpolation = "g01";
-        public const string Home = "g28";
+        // public const string Home = "g28";  // unused
     }
 }
