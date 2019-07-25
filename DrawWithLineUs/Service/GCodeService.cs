@@ -48,7 +48,7 @@ namespace DrawWithLineUs.Service
             listGCodes.Add($"{GCodes.RapidReposition} x{startingPoint.X} y{startingPoint.Y} z{Pen.PenUpIndex}\n");
 
             // lower pen,  as we're about to start drawing...
-            listGCodes.Add($"{GCodes.LinearInterpolation} x{startingPoint.X} y{startingPoint.Y} z{Pen.PenUpIndex}\n");
+            listGCodes.Add($"{GCodes.LinearInterpolation} x{startingPoint.X} y{startingPoint.Y} z{Pen.PenDownIndex}\n");
         }
 
 
@@ -70,7 +70,7 @@ namespace DrawWithLineUs.Service
 
 
         /// <summary>
-        /// Lift the pen, re-using the last coordinates
+        /// Lift the pen at the last coordinate (ready to 'rapid reposition to start of next path')
         /// </summary>
         /// <param name="listGCodes"></param>
         /// <param name="sequence"></param>
