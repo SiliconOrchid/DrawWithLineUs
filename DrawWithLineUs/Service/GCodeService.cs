@@ -16,8 +16,6 @@ namespace DrawWithLineUs.Service
 
             List<string> listGCodes = new List<string>();
 
-            SequenceHome(listGCodes);
-
             foreach (var sequence in listCoordinateStructures)
             {
                 SequenceStart(listGCodes, sequence);
@@ -30,17 +28,6 @@ namespace DrawWithLineUs.Service
             return listGCodes;
         }
 
-
-
-        /// <summary>
-        /// Reposition pen to "home" and explicitly lift the pen as first step (1000,1000 is defined as home in documentation/diagram)
-        /// using "G00" for rapid positioning
-        /// </summary>
-        /// <param name="listGCodes"></param>
-        private static void SequenceHome(List<string> listGCodes)
-        {
-            listGCodes.Add($"{GCodes.RapidReposition} x1000 y1000 z{Pen.PenUpIndex}\n");
-        }
 
 
 
