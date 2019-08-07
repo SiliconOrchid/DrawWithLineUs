@@ -11,7 +11,6 @@ namespace DrawWithLineUs.Console.Test
 {
     public class SvgServiceTests
     {
-
         ISvgService _svgService;
 
         readonly string _singlePathNode = "M2219 5983 c-13 -16 -12 -17 4 -4 9 7 17 15 17 17 0 8 -8 3 -21 -13z";
