@@ -1,9 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.IO;
+
 using DrawWithLineUs.Enum;
 using DrawWithLineUs.Model;
 
@@ -26,6 +27,14 @@ namespace DrawWithLineUs.Service
 
 
             Console.WriteLine($"Reading XML(SVG)...");
+
+            if (!File.Exists(PathToSourceSVG))
+            {
+                Console.WriteLine($"Could not find .SVG file specified in ProgramConfig.cs");
+                Environment.Exit(0); // just shut down the program
+            }
+
+
             using (XmlReader reader = XmlReader.Create($"{PathToSourceSVG}", settings))
             {
                 while (reader.Read())
